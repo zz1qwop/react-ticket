@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
+import { getDatabase, ref, get } from 'firebase/database';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,9 +15,10 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const database = getDatabase(app);
 
 export function register(email, password) {
-  const auth = getAuth();
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -33,13 +35,14 @@ export function register(email, password) {
         case 'auth/email-already-in-use':
           console.log('이미 가입되어 있는 이메일입니다.');
           break;
+        default:
+          console.log('이메일과 비밀번호를 다시 입력해주세요.');
       }
       return error.message;
     });
 }
 
 export function login(email, password) {
-  const auth = getAuth();
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -52,7 +55,6 @@ export function login(email, password) {
 }
 
 export function logout() {
-  const auth = getAuth();
   signOut(auth)
     .then(() => {
       console.log('logout');
@@ -60,4 +62,13 @@ export function logout() {
     .catch((error) => {
       console.log(error.message);
     });
+}
+
+export async function getShowList() {
+  return get(ref(database, 'shows')).then((snapshot) => {
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val());
+    }
+    return [];
+  });
 }
