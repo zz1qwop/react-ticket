@@ -5,7 +5,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { getDatabase, ref, get } from 'firebase/database';
+import { getDatabase, ref, get, set } from 'firebase/database';
+import { v4 as uuid } from 'uuid';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -18,8 +19,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
 
-export function register(email, password) {
-  createUserWithEmailAndPassword(auth, email, password)
+export async function register(email, password) {
+  return createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       return user;
@@ -42,8 +43,8 @@ export function register(email, password) {
     });
 }
 
-export function login(email, password) {
-  signInWithEmailAndPassword(auth, email, password)
+export async function login(email, password) {
+  return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       console.log(user);
@@ -70,5 +71,15 @@ export async function getShowList() {
       return Object.values(snapshot.val());
     }
     return [];
+  });
+}
+
+export async function buyTicket(uid, show, seat) {
+  const id = uuid();
+
+  return set(ref(database, `sold/${uid}/${show}`), {
+    id,
+    row: seat[0],
+    col: seat[1],
   });
 }
