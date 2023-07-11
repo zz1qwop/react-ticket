@@ -11,3 +11,7 @@
 
   cursor: pointer;
 }
+.sold {
+  pointer-events: none;
+  background-color: dimgrey;
+}

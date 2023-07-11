@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { getDatabase, ref, get, set } from 'firebase/database';
 import { v4 as uuid } from 'uuid';
@@ -65,6 +66,12 @@ export function logout() {
     });
 }
 
+export function userStateChange(callback) {
+  onAuthStateChanged(auth, (user) => {
+    callback(user);
+  });
+}
+
 export async function getShowList() {
   return get(ref(database, 'shows')).then((snapshot) => {
     if (snapshot.exists()) {
@@ -77,9 +84,24 @@ export async function getShowList() {
 export async function buyTicket(uid, show, seat) {
   const id = uuid();
 
-  return set(ref(database, `sold/${uid}/${show}`), {
-    id,
+  set(ref(database, `soldSeats/${show.id}/${id}`), {
     row: seat[0],
     col: seat[1],
+  });
+
+  return set(ref(database, `userTicket/${uid}/${id}`), {
+    title: show.title,
+    date: show.date,
+    row: seat[0],
+    col: seat[1],
+  });
+}
+
+export async function getSoldSeats(show) {
+  return get(ref(database, `soldSeats/${show}`)).then((snapshot) => {
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val());
+    }
+    return [];
   });
 }

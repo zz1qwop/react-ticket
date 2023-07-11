@@ -19,7 +19,7 @@ export default function ReservationPage() {
   return (
     <div>
       <Header />
-      <Seats row={show.row} col={show.col} handleSelect={handleSelect} />
+      <Seats show={show} handleSelect={handleSelect} />
       <div>
         <p>show detail</p>
         <p>{show.title}</p>

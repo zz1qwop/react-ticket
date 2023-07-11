@@ -12,7 +12,7 @@ export default function PaymentPage() {
   const user = useContext(AuthContext).user;
 
   const handleSubmit = async () => {
-    await buyTicket(user.uid, show.id, selected);
+    await buyTicket(user.uid, show, selected);
     // spinner 추가할 것
     navigate('/myticket');
   };
