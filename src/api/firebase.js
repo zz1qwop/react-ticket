@@ -90,6 +90,7 @@ export async function buyTicket(uid, show, seat) {
   });
 
   return set(ref(database, `userTicket/${uid}/${id}`), {
+    ticketId: id,
     title: show.title,
     date: show.date,
     row: seat[0],
@@ -99,6 +100,15 @@ export async function buyTicket(uid, show, seat) {
 
 export async function getSoldSeats(show) {
   return get(ref(database, `soldSeats/${show}`)).then((snapshot) => {
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val());
+    }
+    return [];
+  });
+}
+
+export async function getMyTicket(uid) {
+  return get(ref(database, `userTicket/${uid}`)).then((snapshot) => {
     if (snapshot.exists()) {
       return Object.values(snapshot.val());
     }
