@@ -6,8 +6,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getDatabase, ref, get, set } from 'firebase/database';
-import { v4 as uuid } from 'uuid';
+import { getDatabase, ref, get, set, remove } from 'firebase/database';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -81,18 +80,21 @@ export async function getShowList() {
   });
 }
 
-export async function buyTicket(uid, show, seat) {
-  const id = uuid();
-
-  set(ref(database, `soldSeats/${show.id}/${id}`), {
+export async function buyTicket(ticketId, uid, show, seat) {
+  return set(ref(database, `userTicket/${uid}/${ticketId}`), {
+    ticketId: ticketId,
+    showId: show.id,
+    title: show.title,
+    date: show.date,
     row: seat[0],
     col: seat[1],
   });
+}
 
-  return set(ref(database, `userTicket/${uid}/${id}`), {
-    ticketId: id,
-    title: show.title,
-    date: show.date,
+export async function buySoldSeats(ticketId, show, seat) {
+  console.log(show);
+  console.log(seat);
+  return set(ref(database, `soldSeats/${show.id}/${ticketId}`), {
     row: seat[0],
     col: seat[1],
   });
@@ -114,4 +116,12 @@ export async function getMyTicket(uid) {
     }
     return [];
   });
+}
+
+export async function removeTicket(uid, ticketId) {
+  return remove(ref(database, `userTicket/${uid}/${ticketId}`));
+}
+
+export async function removeSoldSeats(show, ticketId) {
+  return remove(ref(database, `soldSeats/${show}/${ticketId}`));
 }

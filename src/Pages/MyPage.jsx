@@ -1,23 +1,25 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Header from '../Components/Header';
 import { useQuery } from '@tanstack/react-query';
 import { getMyTicket } from '../api/firebase';
-import { AuthContext } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 import MyTicket from '../Components/MyTicket';
 
 export default function MyPage() {
-  const user = useContext(AuthContext).user;
+  const { user } = useAuthContext();
 
   const {
     isLoading,
     error,
     data: tickets,
-  } = useQuery(['tickets'], () => getMyTicket(user.uid));
+  } = useQuery(['tickets'], () => getMyTicket(user.uid), {
+    staleTime: 60 * 1000,
+    cacheTime: 60 * 5 * 1000,
+  });
 
   return (
     <div>
       <Header />
-      <button onClick={() => console.log(tickets)}>test</button>
       {isLoading && <p>Loading...</p>}
       {error && <p>Error!</p>}
       {tickets &&

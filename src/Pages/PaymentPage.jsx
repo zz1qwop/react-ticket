@@ -1,21 +1,41 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Header from '../Components/Header';
 import { useLocation } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
-import { buyTicket } from '../api/firebase';
+import { useAuthContext } from '../context/AuthContext';
+import { buySoldSeats, buyTicket } from '../api/firebase';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { v4 as uuid } from 'uuid';
 
 export default function PaymentPage() {
   const navigate = useNavigate();
-
   const { show, selected } = useLocation().state;
-  const user = useContext(AuthContext).user;
+  const { user } = useAuthContext();
 
-  const handleSubmit = async () => {
-    await buyTicket(user.uid, show, selected);
+  const queryClient = useQueryClient();
+
+  const buyMyTicket = useMutation(
+    ({ ticketId, uid, show, selected }) =>
+      buyTicket(ticketId, uid, show, selected),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['tickets']);
+      },
+    }
+  );
+  const buyMySoldSeat = useMutation(({ ticketId, show, selected }) =>
+    buySoldSeats(ticketId, show, selected)
+  );
+
+  const handleSubmit = () => {
+    const ticketId = uuid();
+    buyMyTicket.mutate({ ticketId, uid: user.uid, show, selected });
+    buyMySoldSeat.mutate({ ticketId, show, selected });
+    // await buyTicket(user.uid, show, selected);
     // spinner 추가할 것
     navigate('/myticket');
   };
+
   return (
     <div>
       <Header />

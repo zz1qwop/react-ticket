@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { login, register } from '../api/firebase';
-import { AuthContext } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 
 export default function Modal({ title, closeModal, changeOption }) {
-  const { handleUser } = useContext(AuthContext);
+  const { handleUser } = useAuthContext();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');

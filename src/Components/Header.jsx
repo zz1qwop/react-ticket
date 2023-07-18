@@ -18,8 +18,8 @@ export default function Header() {
     <div>
       <Link to="/main">TICKET</Link>
       <div>
-        <IoTicket />
-        <BiSolidUserCircle onClick={handleMyPage} />
+        <IoTicket onClick={handleMyPage} />
+        <BiSolidUserCircle />
         <button onClick={handleLogout}>logout</button>
       </div>
     </div>
