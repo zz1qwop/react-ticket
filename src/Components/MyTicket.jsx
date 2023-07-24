@@ -2,6 +2,7 @@ import React from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { removeSoldSeats, removeTicket } from '../api/firebase';
 import { useAuthContext } from '../context/AuthContext';
+import styles from './MyTicket.module.css';
 
 export default function MyTicket({ ticket }) {
   const { uid } = useAuthContext().user;
@@ -28,14 +29,19 @@ export default function MyTicket({ ticket }) {
   };
 
   return (
-    <div>
-      <p>{ticketId}</p>
-      <p>{title}</p>
-      <p>{date}</p>
-      <p>
-        {row}행, {col}열
-      </p>
-      <button onClick={handleRemove}>예매 취소</button>
+    <div className={styles.container}>
+      <div className={styles.textBox}>
+        <p className={styles.id}>{ticketId}</p>
+        <p className={styles.date}>{date}</p>
+        <p className={styles.title}>{title}</p>
+        <p className={styles.seat}>
+          {row}행, {col}열
+        </p>
+      </div>
+
+      <button className={styles.removeBtn} onClick={handleRemove}>
+        예매 취소
+      </button>
     </div>
   );
 }

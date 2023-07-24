@@ -6,6 +6,7 @@ import { buySoldSeats, buyTicket } from '../api/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { v4 as uuid } from 'uuid';
+import styles from './PaymentPage.module.css';
 
 export default function PaymentPage() {
   const navigate = useNavigate();
@@ -37,16 +38,33 @@ export default function PaymentPage() {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <Header />
-      <p>payment page</p>
-      <p>user: </p>
-      <p>{show.title}</p>
-      <p>
-        {selected[0]}, {selected[1]}
-      </p>
-      <button>Prev</button>
-      <button onClick={handleSubmit}>Next</button>
+      <div className={styles.content}>
+        <div className={styles.borderBox}>
+          <p className={styles.payment}>Payment Service </p>
+          <div className={styles.textBox}>
+            <p className={styles.text}>{show.title}</p>
+            <p className={styles.smallText}>
+              {show.date}, {show.hall} <br /> {show.description}
+            </p>
+            <p className={styles.text}>
+              {selected[0]}행, {selected[1]}열
+            </p>
+            <p className={styles.description}>
+              해당 좌석을 구매하시겠습니까? Next 버튼을 누르면 결제가 바로
+              진행됩니다. <br /> 구매하신 티켓은 마이페이지에서 확인하실 수
+              있습니다.
+            </p>
+            <div className={styles.btnBox}>
+              <button className={styles.btn}>Prev</button>
+              <button className={styles.btn} onClick={handleSubmit}>
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

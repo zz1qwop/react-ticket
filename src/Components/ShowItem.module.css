@@ -1,7 +1,46 @@
 .box {
-  width: 300px;
+  cursor: pointer;
+  position: relative;
+
+  transition: all ease-in var(--animation-duration);
 }
+
+.box:hover {
+  filter: brightness(0.8);
+}
+
 .img {
   width: 250px;
   height: 380px;
+}
+
+.textBox {
+  position: absolute;
+  width: 234px;
+  left: var(--padding-size);
+  bottom: var(--padding-size);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+
+  background-color: var(--color-white);
+  border-radius: var(--padding-size);
+  opacity: 0.8;
+}
+
+.title {
+  font-weight: var(--weight-bold);
+  font-size: var(--font-medium);
+  padding: var(--padding-size) 0;
+  color: var(--color-main);
+
+  background: linear-gradient(
+    to left,
+    rgba(255, 160, 90, 1) 0%,
+    rgba(231, 43, 43, 1) 74%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

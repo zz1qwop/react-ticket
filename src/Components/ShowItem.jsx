@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function ShowItem({ show }) {
   const navigate = useNavigate();
-  const { url, title, date } = show;
+  const { url, title } = show;
   const handleShow = () => {
     navigate('/reservation', { state: { show: show } });
   };
@@ -12,8 +12,9 @@ export default function ShowItem({ show }) {
   return (
     <div className={styles.box} onClick={handleShow}>
       <img src={url} alt={title} className={styles.img} />
-      <p>{title}</p>
-      <p>{date}</p>
+      <div className={styles.textBox}>
+        <p className={styles.title}>{title}</p>
+      </div>
     </div>
   );
 }

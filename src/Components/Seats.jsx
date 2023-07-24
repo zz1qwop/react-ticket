@@ -2,8 +2,9 @@ import React from 'react';
 import SeatRow from './SeatRow';
 import { useQuery } from '@tanstack/react-query';
 import { getSoldSeats } from '../api/firebase';
+import styles from './Seats.module.css';
 
-export default function Seats({ show, handleSelect }) {
+export default function Seats({ show, selected, handleSelect }) {
   const { id, row, col } = show;
   const {
     isLoading,
@@ -17,10 +18,9 @@ export default function Seats({ show, handleSelect }) {
   }
 
   return (
-    <div>
-      <button onClick={() => console.log(seats)}>test</button>
-      {row} * {col}
-      <div>
+    <div className={styles.container}>
+      <div className={styles.stage}>STAGE</div>
+      <div className={styles.seatRow}>
         {isLoading && <p>Loading...</p>}
         {error && <p>ERROR</p>}
         {seats &&
@@ -36,6 +36,7 @@ export default function Seats({ show, handleSelect }) {
                 row={i}
                 col={col}
                 seatArray={seatArray}
+                selected={selected}
                 handleSelect={handleSelect}
               />
             );

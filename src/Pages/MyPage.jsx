@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getMyTicket } from '../api/firebase';
 import { useAuthContext } from '../context/AuthContext';
 import MyTicket from '../Components/MyTicket';
+import styles from './MyPage.module.css';
 
 export default function MyPage() {
   const { user } = useAuthContext();
@@ -18,14 +19,16 @@ export default function MyPage() {
   });
 
   return (
-    <div>
+    <div className={styles.container}>
       <Header />
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error!</p>}
-      {tickets &&
-        tickets.map((ticket) => (
-          <MyTicket key={ticket.ticketId} ticket={ticket} />
-        ))}
+      <div className={styles.contentBox}>
+        {isLoading && <p>Loading...</p>}
+        {error && <p>Error!</p>}
+        {tickets &&
+          tickets.map((ticket) => (
+            <MyTicket key={ticket.ticketId} ticket={ticket} />
+          ))}
+      </div>
     </div>
   );
 }
