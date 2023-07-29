@@ -7,16 +7,13 @@ import MyTicket from '../Components/MyTicket';
 import styles from './MyPage.module.css';
 
 export default function MyPage() {
-  const { user } = useAuthContext();
+  const { uid } = useAuthContext();
 
   const {
     isLoading,
     error,
     data: tickets,
-  } = useQuery(['tickets'], () => getMyTicket(user.uid), {
-    staleTime: 60 * 1000,
-    cacheTime: 60 * 5 * 1000,
-  });
+  } = useQuery(['tickets', uid || ''], () => getMyTicket(uid));
 
   return (
     <div className={styles.container}>

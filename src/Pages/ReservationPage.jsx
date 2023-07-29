@@ -9,11 +9,12 @@ export default function ReservationPage() {
   const navigate = useNavigate();
 
   const show = useLocation().state.show;
-  const [selected, setSelected] = useState([0, 0]);
+  const [selected, setSelected] = useState(['-', '-']);
   const handleSelect = (array) => {
     setSelected(array);
   };
   const handleBtn = () => {
+    if (selected[0] === '-') return;
     navigate('/payment', { state: { show: show, selected: selected } });
   };
 

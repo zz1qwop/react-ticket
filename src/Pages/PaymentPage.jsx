@@ -32,8 +32,6 @@ export default function PaymentPage() {
     const ticketId = uuid();
     buyMyTicket.mutate({ ticketId, uid: user.uid, show, selected });
     buyMySoldSeat.mutate({ ticketId, show, selected });
-    // await buyTicket(user.uid, show, selected);
-    // spinner 추가할 것
     navigate('/myticket');
   };
 
@@ -57,7 +55,9 @@ export default function PaymentPage() {
               있습니다.
             </p>
             <div className={styles.btnBox}>
-              <button className={styles.btn}>Prev</button>
+              <button className={styles.btn} onClick={() => navigate(-1)}>
+                Prev
+              </button>
               <button className={styles.btn} onClick={handleSubmit}>
                 Next
               </button>
