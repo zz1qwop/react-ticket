@@ -12,3 +12,9 @@
 
   padding-top: calc(var(--padding-size) * 4);
 }
+
+@media (max-width: 440px) {
+  .contentBox {
+    padding-top: calc(var(--padding-size) * 2);
+  }
+}

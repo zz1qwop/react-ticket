@@ -36,3 +36,15 @@
   font-family: 'Sora', sans-serif;
   margin-left: var(--padding-size);
 }
+
+@media (max-width: 440px) {
+  .box {
+    margin-bottom: 0;
+    height: 70px;
+  }
+
+  .title {
+    font-weight: var(--weight-bold);
+    font-size: var(--font-regular);
+  }
+}

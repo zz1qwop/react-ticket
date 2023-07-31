@@ -43,10 +43,10 @@
   font-family: 'Sora', sans-serif;
 
   cursor: pointer;
-  font-size: 18px;
+  font-size: var(--font-medium);
   border: none;
-  border-radius: 8px;
-  padding: 8px;
+  border-radius: var(--padding-size);
+  padding: var(--padding-size);
   background-color: var(--color-main);
   color: var(--color-white);
 
@@ -76,4 +76,23 @@
 
 .custom-shape-divider-top-1689754072 .shape-fill {
   fill: #ffffff;
+}
+
+@media (max-width: 735px) {
+  .box {
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: var(--font-regular);
+  }
+
+  .description {
+    font-size: var(--font-small);
+  }
+
+  .loginBtn {
+    height: 50px;
+    margin-top: calc(var(--padding-size) * 4);
+  }
 }

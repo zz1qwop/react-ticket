@@ -100,3 +100,17 @@ p {
     rgba(255, 160, 90, 1) 73%
   );
 }
+
+@media (max-width: 440px) {
+  .content {
+    width: 80%;
+  }
+
+  .borderBox {
+    height: 70%;
+  }
+
+  .btn {
+    height: 40px;
+  }
+}

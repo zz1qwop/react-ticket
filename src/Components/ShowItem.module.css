@@ -44,3 +44,32 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+@media (max-width: 1065px) {
+  .img {
+    width: 220px;
+    height: 320px;
+  }
+
+  .textBox {
+    width: 204px;
+  }
+
+  .title {
+    font-size: var(--font-small);
+  }
+}
+
+@media (max-width: 735px) {
+  .box {
+    display: flex;
+    justify-content: center;
+  }
+  .img {
+    width: 250px;
+    height: 350px;
+  }
+  .textBox {
+    left: auto;
+  }
+}

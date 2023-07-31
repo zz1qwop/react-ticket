@@ -19,20 +19,58 @@ export default function MainPage() {
     speed: 500,
   };
 
+  const mediumSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+  };
+
+  const smallSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   return (
     <div className={styles.container}>
       <Header />
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error!</p>}
       <div className={styles.shows}>
-        <Slider {...settings}>
-          {shows &&
-            shows.map((show) => (
-              <div>
-                <ShowItem key={show.id} show={show} />
-              </div>
-            ))}
-        </Slider>
+        {isLoading && <p>Loading...</p>}
+        {error && <p>Error!</p>}
+        <div className={styles.bigView}>
+          <Slider {...settings}>
+            {shows &&
+              shows.map((show, index) => (
+                <div key={index}>
+                  <ShowItem key={show.id} show={show} />
+                </div>
+              ))}
+          </Slider>
+        </div>
+        <div className={styles.mediumView}>
+          <Slider {...mediumSettings}>
+            {shows &&
+              shows.map((show, index) => (
+                <div key={index}>
+                  <ShowItem key={show.id} show={show} />
+                </div>
+              ))}
+          </Slider>
+        </div>
+        <div className={styles.smallView}>
+          <Slider {...smallSettings}>
+            {shows &&
+              shows.map((show, index) => (
+                <div key={index}>
+                  <ShowItem key={show.id} show={show} />
+                </div>
+              ))}
+          </Slider>
+        </div>
       </div>
     </div>
   );

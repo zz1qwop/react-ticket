@@ -18,3 +18,15 @@
   font-size: var(--font-medium);
   color: var(--color-white);
 }
+
+@media (max-width: 735px) {
+  .container {
+    width: 300px;
+    height: 50%;
+  }
+
+  .stage {
+    height: 50px;
+    line-height: 50px;
+  }
+}

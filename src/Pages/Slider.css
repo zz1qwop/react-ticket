@@ -13,3 +13,21 @@
 .slick-prev {
   left: -40px;
 }
+
+@media (max-width: 1065px) {
+  .slick-slider {
+    width: 850px;
+  }
+}
+
+@media (max-width: 935px) {
+  .slick-slider {
+    width: 650px;
+  }
+}
+
+@media (max-width: 735px) {
+  .slick-slider {
+    width: 280px;
+  }
+}

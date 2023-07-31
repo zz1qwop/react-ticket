@@ -94,3 +94,42 @@
   margin: 0;
   margin-right: calc(var(--padding-size) * 2);
 }
+
+@media (max-width: 935px) {
+  .rightBox {
+    width: 300px;
+  }
+}
+
+@media (max-width: 735px) {
+  .box {
+    flex-direction: column;
+  }
+
+  .rightBox {
+    width: 300px;
+    height: 400px;
+    border-top: 1px solid var(--color-gray);
+    padding-top: calc(var(--padding-size) * 2);
+  }
+
+  .title {
+    font-size: var(--font-medium);
+  }
+
+  .text {
+    font-size: var(--font-little);
+  }
+
+  .soldSquare {
+    width: var(--font-little);
+    height: var(--font-little);
+  }
+  .seatText {
+    font-size: var(--font-little);
+  }
+
+  .nextBtn {
+    height: 40px;
+  }
+}

@@ -34,3 +34,11 @@
 .selected {
   background-color: var(--color-sub);
 }
+
+@media (max-width: 735px) {
+  .seat {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+  }
+}
