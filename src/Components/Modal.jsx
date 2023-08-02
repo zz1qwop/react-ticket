@@ -11,10 +11,17 @@ export default function Modal({ title, closeModal, changeOption }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setErrorMsg('');
     const user = await login(email, password);
+    if (typeof user === 'string') {
+      setErrorMsg('아이디와 비밀번호를 맞게 입력해주세요.');
+      setTimeout(() => setErrorMsg(''), 3000);
+      return;
+    }
     handleUser(user);
     navigate('/main');
     setEmail('');
@@ -24,6 +31,23 @@ export default function Modal({ title, closeModal, changeOption }) {
   const handleRegister = async (e) => {
     e.preventDefault();
     const user = await register(email, password);
+    if (typeof user === 'string') {
+      switch(user){
+        case 'auth/weak-password':
+          setErrorMsg('비밀번호를 6자리 이상으로 설정해주세요.');
+          break;
+        case 'auth/invalid-email':
+          setErrorMsg('잘못된 이메일 주소입니다.');
+          break;
+        case 'auth/email-already-in-use':
+          setErrorMsg('이미 가입되어 있는 이메일입니다.');
+          break;
+        default:
+          setErrorMsg('이메일과 비밀번호를 다시 입력해주세요.');
+      }
+      setTimeout(() => setErrorMsg(''), 3000);
+      return;
+    }
     handleUser(user);
     navigate('/main');
     setEmail('');
@@ -58,6 +82,7 @@ export default function Modal({ title, closeModal, changeOption }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <p className={styles.errorMsg}>{errorMsg}</p>
           <button className={styles.submitBtn} type="submit">
             OK
           </button>

@@ -26,20 +26,7 @@ export async function register(email, password) {
       return user;
     })
     .catch((error) => {
-      switch (error.code) {
-        case 'auth/weak-password':
-          console.log('비밀번호를 6자리 이상으로 설정해주세요.');
-          break;
-        case 'auth/invalid-email':
-          console.log('잘못된 이메일 주소입니다.');
-          break;
-        case 'auth/email-already-in-use':
-          console.log('이미 가입되어 있는 이메일입니다.');
-          break;
-        default:
-          console.log('이메일과 비밀번호를 다시 입력해주세요.');
-      }
-      return error.message;
+      return error.code;
     });
 }
 
@@ -50,7 +37,7 @@ export async function login(email, password) {
       return user;
     })
     .catch((error) => {
-      return error.message;
+      return error.code;
     });
 }
 
@@ -91,8 +78,6 @@ export async function buyTicket(ticketId, uid, show, seat) {
 }
 
 export async function buySoldSeats(ticketId, show, seat) {
-  console.log(show);
-  console.log(seat);
   return set(ref(database, `soldSeats/${show.id}/${ticketId}`), {
     row: seat[0],
     col: seat[1],
